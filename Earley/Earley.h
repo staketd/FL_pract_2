@@ -2,6 +2,7 @@
 #define PRACT_2_EARLEY_H
 
 #include <Grammar.h>
+#include <unordered_map>
 
 class Earley {
     Grammar G_;
@@ -12,9 +13,14 @@ class Earley {
         int begin_;
         Event();
         Event(int rule, int rulePos, int length);
+
+        unsigned long long getHash() const;
     };
 
     std::vector<std::vector<Event>> D_;
+    std::vector<std::unordered_map<unsigned long long, bool>> EventExistsInD_;
+
+    void addToD_(const Event &event, int classInd);
 
     void scan(const Event &e, int classInd);
 
@@ -26,7 +32,7 @@ class Earley {
 
 public:
     Earley();
-    Earley(Grammar G);
+    explicit Earley(Grammar G);
 
     void setWord(const string &word);
 

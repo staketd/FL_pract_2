@@ -11,9 +11,18 @@ int Grammar::convertFromCharToInt(const char &c)  {
 
 Grammar::Rule::Rule(const char &c, const string& rightSide_s) {
     leftSide_ = convertFromCharToInt(c);
-    rightSide_.resize(rightSide_s.size());
-    for (int i = 0; i < rightSide_.size(); ++i) {
-        rightSide_[i] = convertFromCharToInt(rightSide_s[i]);
+    int sz = 0;
+    for (char rightSide_char : rightSide_s) {
+        if (rightSide_char != '_') {
+            ++sz;
+        }
+    }
+    rightSide_.resize(sz);
+    int cnt = 0;
+    for (char rightSide_char : rightSide_s) {
+        if (rightSide_char != '_') {
+            rightSide_[cnt++] = convertFromCharToInt(rightSide_char);
+        }
     }
 }
 
